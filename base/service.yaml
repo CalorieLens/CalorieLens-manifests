@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: calorielens-api
+  labels:
+    app: calorielens-api
+spec:
+  type: ClusterIP
+  selector:
+    app: calorielens-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
+      protocol: TCP
