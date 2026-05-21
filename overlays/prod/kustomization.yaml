@@ -2,16 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../base
-  - ingress.yaml
+- ../../base
+- ingress.yaml
 
 namespace: calorielens
 
 # CI replaces this tag with the git SHA on every push to main.
 # To roll back: set newTag to a previous SHA and push.
 images:
-  - name: xronace/calorielens-api
-    newTag: latest
+- name: xronace/calorielens-api
+  newTag: 44fe4d8
 
 patches:
-  - path: patch-deployment.yaml
+- path: patch-deployment.yaml
