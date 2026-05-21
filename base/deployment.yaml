@@ -14,9 +14,11 @@ spec:
       labels:
         app: calorielens-api
     spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
       containers:
         - name: calorielens-api
-          image: xronace/calorielens-api:latest
+          image: ghcr.io/calorielens/calorielens-api:latest
           ports:
             - containerPort: 8000
           envFrom:
