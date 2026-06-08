@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
 - ../../base
 - ingress.yaml
-- ../../sealed-secrets/calorielens-prod-secrets.yaml
 
 namespace: calorielens-prod
 
