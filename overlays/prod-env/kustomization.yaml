@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+- ingress.yaml
+- ../../sealed-secrets/calorielens-prod-secrets.yaml
+
+namespace: calorielens-prod
+
+# CI replaces this tag with the git SHA on every push to main.
+# To roll back: set newTag to a previous SHA and push.
+images:
+- name: ghcr.io/calorielens/calorielens-api
+  newTag: 2dc0ddf
+
+patches:
+- path: patch-deployment.yaml
