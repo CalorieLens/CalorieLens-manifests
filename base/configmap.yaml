@@ -4,5 +4,5 @@ metadata:
   name: calorielens-config
 data:
   APP_ENV: production
-  OPENAI_MODEL: gpt-4o
+  OPENAI_MODEL: gpt-4o-mini
   CORS_ORIGINS: ""
