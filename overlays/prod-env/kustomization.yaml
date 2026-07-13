@@ -11,14 +11,14 @@ namespace: calorielens-prod
 # To roll back: set newTag to a previous SHA and push.
 images:
 - name: ghcr.io/calorielens/calorielens-api
-  newTag: 6e60951
+  newTag: 910c439
 
-patches:
-- path: patch-deployment.yaml
 # Version gate (prod only): nudge < 1.3.0 clients to update after the 1.3.0
 # App Store release; min-supported stays 1.0.0 (no forced update). Served by
 # GET /api/v1/app-config. NOTE: env vars are read at startup — a rollout
 # restart (or the next deploy) is required for running pods to pick this up.
+patches:
+- path: patch-deployment.yaml
 - patch: |-
     apiVersion: v1
     kind: ConfigMap
