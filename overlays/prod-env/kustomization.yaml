@@ -13,7 +13,7 @@ images:
 - name: ghcr.io/calorielens/calorielens-api
   newTag: 910c439
 
-# Version gate (prod only): nudge < 1.3.0 clients to update after the 1.3.0
+# Version gate (prod only): nudge < 1.4.0 clients to update after the 1.4.0
 # App Store release; min-supported stays 1.0.0 (no forced update). Served by
 # GET /api/v1/app-config. NOTE: env vars are read at startup — a rollout
 # restart (or the next deploy) is required for running pods to pick this up.
@@ -25,7 +25,7 @@ patches:
     metadata:
       name: calorielens-config
     data:
-      LATEST_APP_VERSION: "1.3.0"
+      LATEST_APP_VERSION: "1.4.0"
       MIN_SUPPORTED_VERSION: "1.0.0"
   target:
     kind: ConfigMap
