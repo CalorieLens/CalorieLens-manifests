@@ -1,0 +1,7 @@
+# Shared CronJob resources referenced as a base by whichever overlays are on 1.5.0.
+# A kustomization directory can be referenced across the tree (unlike a raw file path,
+# which kustomize's load restrictor blocks).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - cronjobs.yaml

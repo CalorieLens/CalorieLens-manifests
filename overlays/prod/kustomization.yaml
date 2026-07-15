@@ -1,12 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Push nudge CronJobs — DEV only for now (prod stays 1.4.0 until the 1.5.0 release,
-# and its image has no app.jobs module). Add to overlays/prod-env at prod release.
 resources:
 - ../../base
 - ingress.yaml
-- ../../base/cronjobs.yaml
+# Push nudge CronJobs — DEV only for now (prod stays 1.4.0 until 1.5.0 release; its image
+# has no app.jobs module). Add `- ../../cronjobs` to overlays/prod-env at prod release.
+# Referenced as a directory — kustomize blocks raw cross-dir file paths.
+- ../../cronjobs
 
 namespace: calorielens
 
