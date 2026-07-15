@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
 - ../../base
 - ingress.yaml
+# Push nudge CronJobs — DEV only for now (prod stays 1.4.0 until the 1.5.0 release,
+# and its image has no app.jobs module). Add to overlays/prod-env at prod release.
+- ../../base/cronjobs.yaml
 
 namespace: calorielens
 

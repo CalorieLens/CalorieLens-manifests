@@ -1,0 +1,67 @@
+# Scheduled push nudges (1.5.0 APNs) — run the job on the API image.
+# Safe to always run: the job no-ops when APNS_* is unset (the sender skips), so these
+# do nothing until the .p8 secret is sealed. The image tag is rewritten by each overlay's
+# `images:` transformer (same as the Deployment). One guaranteed run per fire (CronJob) →
+# no leader election needed even with 2 API replicas.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: push-streak-nudge
+  labels: { app: calorielens-api, job: push-nudge }
+spec:
+  schedule: "0 * * * *"        # hourly — streak_at_risk targets ~8 PM in each user's tz
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 120
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: ghcr-pull-secret
+          containers:
+            - name: push-streak-nudge
+              image: ghcr.io/calorielens/calorielens-api:latest
+              command: ["python", "-m", "app.jobs.push_nudges", "streak"]
+              envFrom:
+                - configMapRef: { name: calorielens-config }
+                - secretRef: { name: calorielens-secrets }
+              resources:
+                requests: { cpu: "50m", memory: "128Mi" }
+                limits: { cpu: "250m", memory: "256Mi" }
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: push-reengage-nudge
+  labels: { app: calorielens-api, job: push-nudge }
+spec:
+  schedule: "0 3 * * *"        # daily 03:00 UTC (noon KST) — one-shot at a 3-day gap;
+                               # must stay daily so each user is nudged at most once
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: ghcr-pull-secret
+          containers:
+            - name: push-reengage-nudge
+              image: ghcr.io/calorielens/calorielens-api:latest
+              command: ["python", "-m", "app.jobs.push_nudges", "reengage"]
+              envFrom:
+                - configMapRef: { name: calorielens-config }
+                - secretRef: { name: calorielens-secrets }
+              resources:
+                requests: { cpu: "50m", memory: "128Mi" }
+                limits: { cpu: "250m", memory: "256Mi" }
