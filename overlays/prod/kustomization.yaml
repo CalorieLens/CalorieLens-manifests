@@ -1,12 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-- ../../base
-- ingress.yaml
 # Push nudge CronJobs — DEV only for now (prod stays 1.4.0 until 1.5.0 release; its image
 # has no app.jobs module). Add `- ../../cronjobs` to overlays/prod-env at prod release.
 # Referenced as a directory — kustomize blocks raw cross-dir file paths.
+resources:
+- ../../base
+- ingress.yaml
 - ../../cronjobs
 
 namespace: calorielens
@@ -15,7 +15,7 @@ namespace: calorielens
 # To roll back: set newTag to a previous SHA and push.
 images:
 - name: ghcr.io/calorielens/calorielens-api
-  newTag: 6f40f7f
+  newTag: d800e5d
 
 patches:
 - path: patch-deployment.yaml
