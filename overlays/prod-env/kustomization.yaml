@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
 - ../../base
 - ingress.yaml
+# Push nudge CronJobs (1.5.0). Prod is now on the 1.5.0 image which has app.jobs.
+# Referenced as a directory — kustomize blocks raw cross-dir file paths.
+- ../../cronjobs
 
 namespace: calorielens-prod
 
