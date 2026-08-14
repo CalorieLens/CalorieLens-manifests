@@ -10,20 +10,10 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: api-prod.121.138.171.230.sslip.io
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: calorielens-api
-                port:
-                  number: 80
-    # Stable DDNS hostname (ASUS DDNS auto-tracks the dynamic public IP). The
-    # iOS Prod build targets this instead of the static-IP sslip.io host, so the
-    # app keeps working when the ISP changes the IP. The sslip.io host above is
-    # retained for backward compatibility with already-installed builds.
+    # Stable DDNS hostname (ASUS DDNS auto-tracks the dynamic public IP). The iOS
+    # Prod build targets this so the app keeps working when the ISP changes the IP.
+    # (Legacy static-IP api-prod.121.138.171.230.sslip.io removed 2026-08-14 — its
+    # IP is dead and a stuck ACME renewal was blocking cert issuance.)
     - host: xronocore.asuscomm.com
       http:
         paths:
@@ -35,9 +25,6 @@ spec:
                 port:
                   number: 80
   tls:
-    - hosts:
-        - api-prod.121.138.171.230.sslip.io
-      secretName: calorielens-api-prod-tls
     - hosts:
         - xronocore.asuscomm.com
       secretName: calorielens-api-prod-asuscomm-tls
