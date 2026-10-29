@@ -19,3 +19,17 @@ images:
 
 patches:
 - path: patch-deployment.yaml
+- patch: |-
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: calorielens-config
+    data:
+      # Subscription verification (1.6.1). DEV only. Enforcement stays off.
+      SUBSCRIPTION_ENFORCEMENT: "off"
+      APPLE_IAP_BUNDLE_ID: "com.xronocore.calorielens.dev"
+      APPLE_IAP_PRODUCT_ID: "com.xronocore.calorielens.standard.monthly"
+      APPLE_APP_APPLE_ID: "6776333348"
+  target:
+    kind: ConfigMap
+    name: calorielens-config
