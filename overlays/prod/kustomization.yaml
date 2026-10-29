@@ -29,6 +29,8 @@ patches:
     data:
       # Subscription verification (1.6.1). DEV only. Enforcement stays off.
       SUBSCRIPTION_ENFORCEMENT: "off"
+      # Android push (FCM). The service-account key is in the sealed secret.
+      FCM_PROJECT_ID: "calorielens-494112"
       APPLE_IAP_BUNDLE_ID: "com.xronocore.calorielens.dev"
       APPLE_IAP_PRODUCT_ID: "com.xronocore.calorielens.standard.monthly"
       APPLE_APP_APPLE_ID: "6776333348"
