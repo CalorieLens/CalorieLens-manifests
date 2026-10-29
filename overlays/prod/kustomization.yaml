@@ -15,7 +15,7 @@ namespace: calorielens
 # To roll back: set newTag to a previous SHA and push.
 images:
 - name: ghcr.io/calorielens/calorielens-api
-  newTag: 34865a4
+  newTag: 331a5fb
 
 patches:
 - path: patch-deployment.yaml
